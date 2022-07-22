@@ -4,44 +4,43 @@ const container = document.querySelector('#container');
 let mainContainer = container;
 
 createGrid.addEventListener('click', () => {
+    let cancel = false;
     gridCol = '';
-    let size = prompt('Enter the number of squares per sides for the grid', 16)
-    for (let i = 1; i < size; i++) {
-        gridCol += 'auto '
+    let size = prompt('Enter the number of squares per sides for the grid', 16);
+    while (size > 100 || size < 1) {
+        if (size == null) {
+            cancel = true;
+            break;
+        }
+        if (size > 100)
+            size = prompt('The maximum is 100. Enter again.');
+        else if (size < 1)
+            size = prompt('The minimum is 1. Enter again.');
     }
-    gridCol += 'auto';
-    // mainContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
-    // console.log(mainContainer.childNodes.length);
+    for (let i = 0; i < size; i++)
+        gridCol += 'auto '
 
-    // const squaresCollection = document.getElementsByClassName('square');
-    // for (let i = container.childNodes.length - 1; i > -1; i--) {
-    //     container.removeChild(squaresCollection[i]);
-    //     // console.log(i)
-    // }
-    delContainer.removeChild(mainContainer);
-    const newContainer = document.createElement('div');
-    // newContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
-    mainContainer = newContainer;
-    delContainer.append(mainContainer);
-    // console.log(container.childNodes.length);
-    grid(size, gridCol);
+    if (!cancel) {
+        delContainer.removeChild(mainContainer);
+        const newContainer = document.createElement('div');
+        mainContainer = newContainer;
+        delContainer.append(mainContainer);
+        grid(size, gridCol);
+    }
 });
 
 function grid(size, gridCol) {
-    mainContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
+    mainContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 600px; height: 600px; border: 1px solid black`);
 
     for (let i = 0; i < size * size; i++) {
         const square = document.createElement('div');
         square.classList.toggle('square');
         square.setAttribute('style', 'border: 1px solid black;');
-        // square.addEventListener('mouseenter', () => {
-        //     square.setAttribute('style', 'background-color: black');
-        // });
+        square.addEventListener('mouseenter', () => {
+            square.style.backgroundColor = 'black';
+        });
         mainContainer.append(square);
     }
-    // delContainer.append(container);
-    // console.log(container.childNodes.length);
-    // container.append(delContainer);
 }
 
 
