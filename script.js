@@ -1,38 +1,49 @@
+const delContainer = document.querySelector('.delContainer');
 const createGrid = document.querySelector('.createGrid');
 const container = document.querySelector('#container');
-let gridCol = 'auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto';
+let mainContainer = container;
 
-let size = 256;
 createGrid.addEventListener('click', () => {
     gridCol = '';
-    size = prompt('Enter the number of squares per sides for the grid', 16)
+    let size = prompt('Enter the number of squares per sides for the grid', 16)
     for (let i = 1; i < size; i++) {
         gridCol += 'auto '
     }
     gridCol += 'auto';
-    container.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
-    container.length;
-    for (let i = 0; i < size; i++) {
-        const square = document.createElement('div');
-        square.setAttribute('style', 'border: 1px solid gray;');
-        // square.addEventListener('mouseenter', () => {
-        //     square.setAttribute('style', 'background-color: black');
-        // });
-        container.append(square);
-    }
+    // mainContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
+    // console.log(mainContainer.childNodes.length);
+
+    // const squaresCollection = document.getElementsByClassName('square');
+    // for (let i = container.childNodes.length - 1; i > -1; i--) {
+    //     container.removeChild(squaresCollection[i]);
+    //     // console.log(i)
+    // }
+    delContainer.removeChild(mainContainer);
+    const newContainer = document.createElement('div');
+    // newContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
+    mainContainer = newContainer;
+    delContainer.append(mainContainer);
+    // console.log(container.childNodes.length);
+    grid(size, gridCol);
 });
 
-function grid() {
-    container.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
+function grid(size, gridCol) {
+    mainContainer.setAttribute('style', `display: grid; grid-template-columns: ${gridCol}; width: 500px; height: 500px; border: 1px solid black`);
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size * size; i++) {
         const square = document.createElement('div');
-        square.setAttribute('style', 'border: 1px solid gray;');
+        square.classList.toggle('square');
+        square.setAttribute('style', 'border: 1px solid black;');
         // square.addEventListener('mouseenter', () => {
         //     square.setAttribute('style', 'background-color: black');
         // });
-        container.append(square);
+        mainContainer.append(square);
     }
+    // delContainer.append(container);
+    // console.log(container.childNodes.length);
+    // container.append(delContainer);
 }
 
-grid()
+
+let gridCol = 'auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto';
+grid(16, gridCol);
